@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        *{
+    box-sizing:border-box;
+    }
+    body{
+        background: linear-gradient( to bottom,#ffbd54 0%,#fec458 50%,#ffbc3a 100%);
+        font-family:Arial;
+    }
+    #container{
+        width:100%;
+        height: 97vh;
+        background:#eff3f7;
+        margin:0 auto;
+        font-size:0;
+        border-radius:5px;
+        overflow:hidden;
+    }
+    aside{
+        width:30%;
+        height:100%;
+        background-color:#3b3e49;
+        display:inline-block;
+        font-size:15px;
+        vertical-align:top;
+    }
+    main{
+        width:70%;
+        height:100vh;
+        display:inline-block;
+        font-size:15px;
+        vertical-align:top;
+    }
+
+    aside header{
+        padding:30px 20px;
+    }
+    aside input{
+        width:100%;
+        height:50px;
+        line-height:50px;
+        padding:0 50px 0 20px;
+        background-color:#5e616a;
+        border:none;
+        border-radius:3px;
+        color:#fff;
+        background-repeat:no-repeat;
+        background-position:170px;
+        background-size:40px;
+    }
+    aside input::placeholder{
+        color:#fff;
+    }
+    aside ul{
+        padding-left:0;
+        margin:0;
+        list-style-type:none;
+        overflow-y:scroll;
+        height:65vh;
+    }
+    aside li{
+        padding:10px 0;
+    }
+    aside li:hover{
+        background-color:#5e616a;
+    }
+    h2,h3{
+        margin:0;
+    }
+    aside li img{
+        border-radius:50%;
+        margin-left:20px;
+        margin-right:8px;
+    }
+    aside li div{
+        display:inline-block;
+        vertical-align:top;
+        margin-top:12px;
+    }
+    aside li h2{
+        font-size:14px;
+        color:#fff;
+        font-weight:normal;
+        margin-bottom:5px;
+    }
+    aside li h3{
+        font-size:12px;
+        color:#7e818a;
+        font-weight:normal;
+    }
+
+    .status{
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        display:inline-block;
+        margin-right:7px;
+    }
+    .green{
+        background-color:#58b666;
+    }
+    .orange{
+        background-color:#ff725d;
+    }
+    .blue{
+        background-color:#6fbced;
+        margin-right:0;
+        margin-left:7px;
+    }
+
+    main header{
+        padding:30px 20px 30px 40px;
+    }
+    main header > *{
+        display:inline-block;
+        vertical-align:top;
+    }
+    main header img:first-child{
+        border-radius:50%;
+    }
+    main header div{
+        margin-left:10px;
+    }
+    main header h2{
+        font-size:0.9rem;
+        margin-bottom:5px;
+    }
+    main header h3{
+        font-size:14px;
+        font-weight:normal;
+        color:#7e818a;
+    }
+
+    #chat{
+        padding-left:0;
+        margin:0;
+        list-style-type:none;
+        overflow-y:scroll;
+        height: 65vh;
+        border-top:2px solid #fff;
+        border-bottom:2px solid #fff;
+    }
+    #chat li{
+        padding:10px 30px;
+    }
+    #chat h2,#chat h3{
+        display:inline-block;
+        font-size:13px;
+        font-weight:normal;
+    }
+    #chat h3{
+        color:#bbb;
+    }
+    #chat .entete{
+        margin-bottom:5px;
+    }
+    #chat .entete h3{
+        display: block;;
+    }
+    #chat .message{
+        padding:20px;
+        color:#fff;
+        line-height:25px;
+        max-width:90%;
+        display:inline-block;
+        text-align:left;
+        border-radius:5px;
+        word-wrap: break-word;
+    }
+    #chat .me{
+        text-align:right;
+    }
+    #chat .you .message{
+        background-color:#58b666;
+    }
+    #chat .me .message{
+        background-color:#6fbced;
+    }
+    #chat .triangle{
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 10px 10px 10px;
+    }
+    #chat .you .triangle{
+            border-color: transparent transparent #58b666 transparent;
+            margin-left:15px;
+    }
+    #chat .me .triangle{
+            border-color: transparent transparent #6fbced transparent;
+            margin-left:375px;
+    }
+    .userItem h2:nth-child(1){
+        color: #ffbd54;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    main footer{
+        height:155px;
+    }
+    main footer textarea{
+        resize:none;
+        border:none;
+        display:block;
+        width:100%;
+        height:80px;
+        border-radius:3px;
+        padding:20px;
+        font-size:13px;
+        margin-bottom:13px;
+    }
+    main footer textarea::placeholder{
+        color:#ddd;
+    }
+    main footer img{
+        height:30px;
+        cursor:pointer;
+    }
+    main footer a{
+        text-decoration:none;
+        text-transform:uppercase;
+        font-weight:bold;
+        color:#6fbced;
+        vertical-align:top;
+        margin-left:333px;
+        margin-top:5px;
+        display:inline-block;
+    }
+    .chat_id{
+        font-size: 0.rem;
+        color: #6e6e6e;
+    }
+    .message-button{
+        width: 80%;
+        padding: 9px 0;
+        border-radius: 1em;
+        border: 0;
+        color: white;
+        font-weight: bold;
+        background: linear-gradient(60deg, #1098ad, #07b39b, #6fba82);
+    }
+    .search-input{
+        width: 100%;
+    }
+    .footer-buttons{
+        display: flex;
+    }
+    .offline{
+        color: #943a3a;
+    }
+    .settingsBlock{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .settings-text{
+        display: inline;
+        color: white;
+    }
+    .settings-button{
+        margin: 5px 0px;
+    }
+    .deleteDialog{
+        margin-left: 40%;
+        width: 70px;
+        height: 70px;
+    }
+    @media screen and (max-width: 720px){
+        * a{
+            text-decoration: none;
+        }
+        .user{
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .userItem h2{
+            font-size: 0.4rem;
+        }
+        .userItem h2:first-child{
+            font-size: 0.7rem;
+        }
+        .user img{
+            margin: 0 auto 0 auto;
+        }
+        header img, .user img{
+            width: 40px;
+            height: 40px;
+        }
+        .chat_id{
+            font-size: 0.5rem;
+        }
+        main header{
+            padding: 12px 8px 12px 16px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <aside>
+            <div class="settingsBlock">
+                <a href="./adminSettings"><img src="https://img.icons8.com/flat_round/128/000000/settings--v1.png" class="settings-button" width="64px"/></a>
+                <h3 class="settings-text">Настройки</h3>
+            </div>
+            <header>
+                <input type="text" placeholder="Поиск" class="search-input">
+            </header>
+            <ul>
+            </ul>
+        </aside>
+        <main>
+            <header>
+                <img src="https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png" width="55px" alt="">
+                <div>
+                    <h2 class="chat_with">Выбирете пользователя</h2>
+                    <h2 class="chat_id"></h2>
+                    <h2 class="mail"></h2>
+                </div>
+                <img class="deleteDialog" src="https://img.icons8.com/dusk/64/000000/delete-forever.png"/>
+            </header>
+            <ul id="chat">
+            </ul>
+            <footer>
+                <form class="message_form">
+                    <textarea placeholder="Введите сообщение" class="textInput"></textarea>
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="">
+                    <input type="submit" class="message-button">
+                </form>
+            </footer>
+        </main>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+        // Включаем socket.io и отслеживаем все подключения
+        var socket = io.connect();
+        //Получение query параметра с url
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        // Функция которая получает куки
+        function getCookie(name) {
+            var matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+		$(function() {
+            //Получение пользователей 
+            function getAllUsers(){
+                setLastActivity();
+                if(getParameterByName('u') == "" || getParameterByName('u') == undefined){
+                    $('main').hide();
+                }
+                $.get("/adminPanel/api/users?p=" + getCookie('password') + "&f="+$('.search-input').val()+"" , function( data ) {
+                    $('aside ul').html('');
+                    for(let i = 0; i <= data.length; i++){
+                            let name = data[i]['dialog_user_id'];
+                            let dialog_id = data[i]['dialog_id'];
+                            let check = data[i]['dialog_mess_saw'];
+                            if(data[i]['dialog_offline'] == "true"){
+                                var offline = 'Оффлайн Вопрос';
+                            }else{
+                                var offline = '';
+                            }
+                            if(check == 1){ 
+                                sawMess = 'Не просмотрено';
+                            }else{
+                                sawMess = 'Просмотрено';
+                            }
+                            $('aside ul').append('<a href=/adminPanel?u='+ dialog_id +'><li class="user"><img src="https://uybor.uz/borless/uybor/img/user-images/user_no_photo_300x300.png" width="55px" alt=""><div class="userItem"><h2>'+ name +'</h2><h2>'+ data[i]['dialog_user_mail'] +'</h2><h3 class="offline">'+ offline +'</h3><h3>'+ sawMess +'<h3></div></li></a>')
+                    }
+                });
+            }
+            //Время последней активности админа
+            function setLastActivity(){
+                $.get("/adminSettings/set?p="+getCookie('password') , function( data ) {
+                });
+            }
+            //Обновление после сообщения пользователя
+            socket.on('update', function(data){
+                getLastMessages();
+                getAllUsers();
+            });
+            getAllUsers();
+            //Отправление сообщения от админа
+            var $sendForm = $('.message_form');
+            var $messageInput = $('.textInput');
+            $sendForm.submit((event) => {
+                event.preventDefault();
+                getLastMessages();
+                getAllUsers();
+                socket.emit('send mess', {mess: $messageInput.val(), name: 'Консультант', dialog_id: getParameterByName('u')});
+                $messageInput.val('');
+            });
+            //Удаление пользователя
+            $('.deleteDialog').click(() => {
+                var dialog_id = getParameterByName('u');
+                if(dialog_id != ""){
+                    var deleteD = confirm('Удалять?');
+                    if(deleteD){
+                        $.get("/adminPanel/api/delete?u="+getParameterByName('u') , function( data ) {}); 
+                    }
+                }
+                getAllUsers();
+            });
+            //Получение диалога
+            getLastMessages();
+            getAllUsers();
+            function getLastMessages(msg){
+                setLastActivity();
+                $('#chat').html('');
+                $.get("/adminPanel/api?u="+getParameterByName('u')+"&m="+ msg , function( data ) {
+                    $('.chat_with').html('Чат с '+ data[1]['chat_messages_fk_user_id']);
+                    $('.chat_id').html(data[1]['chat_messages_fk_dialog_id']);
+                    $('.mail').html(data[0]['mail']);
+                    for(let i = 1; i <= data.length; i++){
+                        let msg = data[i]['chat_messages_text'];
+                        if(data[i]['chat_messages_fk_user_id'] == "Консультант"){
+                            var className = "you";
+                        }else{
+                            var className = "me";
+                        }
+                        $('#chat').append('<li class="'+ className +'"><div class="entete"><h2>' + data[i]['chat_messages_fk_user_id'] + '</h2><h3>' + data[i]['chat_messages_time'] + '</h3></div><div class="message">'+ msg +'</div></li>');
+                        document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight; // кролл в конец
+                    }
+                });
+            }
+            //Поиск
+            document.querySelector('.search-input').addEventListener('input', () =>{
+                getAllUsers();
+            })
+        });
+    </script>
+</body>
+</html>

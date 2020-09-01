@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Auth</title>
+    <style>
+        body{
+            background: linear-gradient( to bottom,#ffbd54 0%,#fec458 50%,#ffbc3a 100%);
+        }
+        .adminBlock{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .adminBlock form{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        form input{
+            margin: 1rem;
+            border: none;
+            background-image: none;
+            background-color: white;
+            padding: 1rem 2rem;
+            margin-right: 1rem;
+            border-radius: 1.125rem;
+            flex-grow: 2;
+            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.2);
+            font-family: Red hat Display, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.025em;
+        }
+        .send{
+            background-color: #2ab88b;
+        }
+    </style>
+</head>
+<body>
+    <div class="adminBlock">
+        <form action="/adminPanel" method="post">
+            <input type="text" name="name" placeholder="Им'я">
+            <input type="password" name="password" placeholder="Пароль">
+            <input type="submit" class="send">
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>    
+</body>
+</html>

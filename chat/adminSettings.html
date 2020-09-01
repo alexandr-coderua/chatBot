@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Auth</title>
+    <style>
+        body{
+            background: linear-gradient( to bottom,#ffbd54 0%,#fec458 50%,#ffbc3a 100%);
+        }
+        .adminBlock{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .adminBlock form{
+            width: 80%;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+        }
+        form input{
+            margin: 1rem;
+            border: none;
+            background-image: none;
+            background-color: white;
+            padding: 1rem 2rem;
+            margin-right: 1rem;
+            border-radius: 1.125rem;
+            flex-grow: 2;
+            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.2);
+            font-family: Red hat Display, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.025em;
+        }
+        .welcome_block{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .welcome_text{
+            width: 100%;    
+        }
+        .apply{
+            height: 20%;
+            background-color: #2ab88b;
+        }
+        h3{
+            font-size: 30px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .welcome_block h5{
+            margin: 0;
+            color: silver;
+        }
+    </style>
+</head>
+<body>
+    <div class="adminBlock">
+        <form>
+            <h3>Включать оффлайн форму?</h3>
+            <label class="container">Да
+                <input class="radioValue" type="radio" name="offline" value="on">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Нет
+                <input class="radioValue" type="radio" name="offline" value="off">
+                <span class="checkmark"></span>
+            </label>
+            <div class="welcome_block">
+                <h3>Введите текст для приветствия</h3>
+                <h4>Сейчас установлено: </h4>
+                <h5>Что бы установить значение по умолчанию: в поле введите пробел</h5>
+                <input type="text" class="welcome_text">
+                <input type="submit" class="apply">
+                <h2 class="result"></h2>
+            </div>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>    
+    <script>
+        // Функция которая получает куки
+        function getCookie(name) {
+            var matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+        $(function() {
+            $.get("/adminSettings/get" , function( data ) {
+                    if(data[0]['offline'] == "off"){
+                    }else{
+                    }
+                    $('.welcome_block h4').html('Сейчас установлено: '+ data[0]['welcome']);
+            });
+            $('.adminBlock form').submit(function(event) {
+                event.preventDefault();
+                if($('.radioValue:checked').val() != undefined && $('.welcome_text').val() != ""){
+                    $.get("/adminSettings/set?p="+getCookie('password')+"&o="+ $('.radioValue:checked').val() + "&w=" + $('.welcome_text').val() , function( data ) {
+                    $('.result').html('Настройки успешно сохранены');    
+                    });
+                }else{
+                    $('.result').html('Заполните все поля!');    
+                }
+            });
+        });
+    </script>
+</body>
+</html>

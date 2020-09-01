@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/chat/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+</head>
+<body>
+    <div class="center">
+            <div class="chat showBox">
+            <div class="contact bar">
+                <div class="close-chat">
+                    <img src="https://image.flaticon.com/icons/svg/992/992680.svg" class="logout-chat" width="23px" alt="Выйти">
+                    <img src="https://image.flaticon.com/icons/svg/860/860745.svg" class="close-chat_btn" width="32px" alt="Закрыть">
+                </div>
+                <div class="pic"></div>
+                <div class="name">
+                    Консультант
+                </div>
+                <div class="seen">
+                    Онлайн!
+                </div>
+            </div>
+            <div class="messages" id="chat">
+                <div class="time">
+                    Вы вошли в чат
+                </div>
+                <div class="authName">
+                    <form class="formAuth">
+                        <div class="message me welcome-mess">Здравствуйте, у нас есть <a href="https://privivka.kg/kalendar-privivok/" target="_blank" >календарь прививок</a></div>
+                        <div class="offline-mess">К сожалению Консультанты не в сети, вы можете задать оффлайн вопрос</div>
+                        
+                        <input type="text" class="input_name" maxlength="64" placeholder="Ваше Им'я">
+                        <input type="email" class="email" maxlength="64" placeholder="Ваш EMAIL">
+                        <h3 class="error_text">Заполните поля</h3>
+                        <input type="submit" class="input-submit" value="Присоединиться">
+                    </form>
+                </div>
+                <div class="offlineSend">
+                    <form class="formOffline">
+                        <input type="text" class="input_name" maxlength="64" placeholder="Ваше Им'я">
+                        <input type="email" class="email" maxlength="64" placeholder="Ваш EMAIL">
+                        <h3 class="error_text">Заполните поля</h3>
+                        <textarea class="message_input-offline" cols="30" maxlength="4000" rows="10"></textarea>
+                        <input type="submit" class="send-message-ofline" value="Отправить">
+                    </form>
+                </div>
+                <div class="all_messages">
+                </div>
+                <div class="message typing">
+                    <div class="typing typing-1"></div>
+                    <div class="typing typing-2"></div>
+                    <div class="typing typing-3"></div>
+                </div>
+            </div>
+            <div class="offline-quest">Офлайн Вопрос</div>
+            <div class="input">
+                <form class="message_form">
+                    <!--<input type="file" class="upload" id="photo-upload"/> -->
+                    <input placeholder="Введите сообщение" maxlength="4000" type="text" class="message_input" />
+                    <input type="submit" class="send-message">
+                </form>
+            </div>
+        </div>
+        <a id="chat_btn" class="round_cor" href="#">
+            <img src="data:image/png;base64,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">
+        </a>
+        <div class="chat_open">
+        </div>
+    </div>
+    <!-- Подключаем jQuery, а также Socket.io -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/chat/chat.js"></script>
+</body>
+</html>
