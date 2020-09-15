@@ -10,7 +10,7 @@ app.use(require('express').static(__dirname + '/'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var mysql = require('mysql');
 // Отслеживание порта
-server.listen(80);
+server.listen(1000);
 
 //Подключение к базе даных
 var connection = mysql.createConnection({
@@ -20,12 +20,6 @@ var connection = mysql.createConnection({
 	database : 'chat'
 });
 connection.connect();
-fs.readdirSync('./').forEach(file => {
-	app.get(file, function(request, respons) {
-		respons.sendFile(__dirname + '/'+file);
-	});
-})
-
 // Отслеживание главной
 app.get('/', function(request, respons) {
 	respons.sendFile(__dirname + '/index.html');
@@ -133,7 +127,7 @@ io.sockets.on('connection', function(socket) {
 									}
 									io.sockets.emit('update',{}); //Обновление сообщений админа
 								}else{
-									io.sockets.to(dialog_id).emit('render get', {mess: results, name: results[0]['chat_messages_fk_user_id']}); // Обновление сообщений пользователя
+									io.sockets.emit('render get', {mess: results, name: results[0]['chat_messages_fk_user_id']}); // Обновление сообщений пользователя
 									io.sockets.emit('update',{});
 								}
 							}
@@ -226,7 +220,7 @@ io.sockets.on('connection', function(socket) {
 app.post('/adminPanel', urlencodedParser, function (req, res) {
 	if(req.body.password == "6se3f9fD36uFMLL"){
 		res.cookie('support', req.body.name);
-		res.cookie('password', req.body.password,{ maxAge: 43200000 });
+		res.cookie('password', req.body.password);
 		res.redirect('/adminPanel');
 	}
 });

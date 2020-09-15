@@ -23,7 +23,7 @@ function getMessages(){
     $.get("/api?u="+getCookie('user')+getCookie('email')+"", function(data) {
         $('.all_messages').html('');
         $('.time').html(data[0]['chat_messages_time']);
-        for(let i = 0; i <= data.length; i++){
+        for(let i = 0; i <= data.length -1; i++){
             msg = data[i]['chat_messages_text'];
             if(data[i]['chat_messages_fk_user_id'] == getCookie('user')){
                 var className = "me";
@@ -65,11 +65,8 @@ $(function() {
         event.preventDefault();
         if ($(".chat").hasClass("hide")) {
             $(".chat").removeClass("hide").addClass("showBox");
-            chat.removeClass("showBox").addClass("hide");
         } else if (!$(".chat").hasClass("hide")) {
             $(".chat").addClass("hide").removeClass("showBox");
-            $('.chat_btn').addClass("showBtn");
-            chat.removeClass("hide").addClass("showBox");
         }
     });
     // Включаем socket.io и отслеживаем все подключения
@@ -121,6 +118,7 @@ $(function() {
     $form_auth.submit(function(event) {
         event.preventDefault();
         if($(".input_name").val() != "" && $(".email").val() != ""){
+            var regex = /(<([^>]+)>)/ig;
             document.cookie = "user="+$(".input_name").val();
             document.cookie = "email="+$(".email").val();
             hideAuth();
@@ -140,11 +138,12 @@ $(function() {
     $('.send-message-ofline').click(() =>{
         event.preventDefault();
         if($('.formOffline .input_name').val() != "" && $('.formOffline .email').val() != ""){
-            alert($('.input_name').val());
-            socket.emit('send mess', {mess: $('.message_input-offline').val(), name: $('.formOffline .input_name').val() , email: $('.formOffline .email').val(), offline: "true"});
-            $('.message_input-offline').val(''); 
-            $('.input_name').val(''); 
-            $('.email').val(''); 
+            if($('.formOffline .input_name').val() != "Консультант"){
+                socket.emit('send mess', {mess: $('.message_input-offline').val(), name: $('.formOffline .input_name').val() , email: $('.formOffline .email').val(), offline: "true"});
+                $('.message_input-offline').val(''); 
+                $('.input_name').val(''); 
+                $('.email').val(''); 
+            }
         }else{
             $('.input_name ,.email').css('border','2px solid red');
             $('.error_text').css('display','block');
@@ -153,14 +152,17 @@ $(function() {
     //Отравка сообщений
     $form.submit(function(event) {
         event.preventDefault();
-        socket.emit('send mess', {mess: $textarea.val(), name: getCookie('user'), email: getCookie('email'), offline: "false"});
+        if(getCookie('user') != "Консультант"){
+            socket.emit('send mess', {mess: $textarea.val(), name: getCookie('user'), email: getCookie('email'), offline: "false"});
+        }
         $textarea.val('');
     });
     //Рендер новых сообщений
     socket.on('render get', function(data){
         $all_messages.html('');
         $('.time').html(data.mess[0]['chat_messages_time']);
-        for(let i = 0; i <= data.mess.length; i++){
+        for(let i = 0; i < data.mess.length; i++){
+            
             msg = data.mess[i]['chat_messages_text'];
             if(data.mess[i]['chat_messages_fk_user_id'] == data.name){
                 var className = "me";

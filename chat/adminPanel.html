@@ -266,7 +266,11 @@
         margin: 5px 0px;
     }
     .deleteDialog{
-        margin-left: 40%;
+        width: 40%;
+        display: inline-flex;
+        justify-content: flex-end;
+    }
+    .deleteImg{
         width: 70px;
         height: 70px;
     }
@@ -323,7 +327,9 @@
                     <h2 class="chat_id"></h2>
                     <h2 class="mail"></h2>
                 </div>
-                <img class="deleteDialog" src="https://img.icons8.com/dusk/64/000000/delete-forever.png"/>
+                <div class="deleteDialog">
+                    <img class="deleteImg" src="https://img.icons8.com/dusk/64/000000/delete-forever.png"/>
+                </div>
             </header>
             <ul id="chat">
             </ul>
@@ -368,7 +374,7 @@
                 }
                 $.get("/adminPanel/api/users?p=" + getCookie('password') + "&f="+$('.search-input').val()+"" , function( data ) {
                     $('aside ul').html('');
-                    for(let i = 0; i <= data.length; i++){
+                    for(let i = 0; i < data.length; i++){
                             let name = data[i]['dialog_user_id'];
                             let dialog_id = data[i]['dialog_id'];
                             let check = data[i]['dialog_mess_saw'];
@@ -415,6 +421,7 @@
                     if(deleteD){
                         $.get("/adminPanel/api/delete?u="+getParameterByName('u') , function( data ) {}); 
                     }
+                    document.location.href='./adminPanel';
                 }
                 getAllUsers();
             });
@@ -428,7 +435,7 @@
                     $('.chat_with').html('Чат с '+ data[1]['chat_messages_fk_user_id']);
                     $('.chat_id').html(data[1]['chat_messages_fk_dialog_id']);
                     $('.mail').html(data[0]['mail']);
-                    for(let i = 1; i <= data.length; i++){
+                    for(let i = 1; i < data.length; i++){
                         let msg = data[i]['chat_messages_text'];
                         if(data[i]['chat_messages_fk_user_id'] == "Консультант"){
                             var className = "you";
